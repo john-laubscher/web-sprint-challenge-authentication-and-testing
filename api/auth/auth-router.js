@@ -5,7 +5,7 @@ const { JWT_SECRET } = require("../../secrets/secrets.js");
 const User = require("./auth-model");
 const { validateUsername, validateCredentials, checkLoginUsername } = require("./auth-middleware");
 
-router.post("/register", validateUsername, validateCredentials, (req, res, next) => {
+router.post("/register", validateCredentials, validateUsername, (req, res, next) => {
   const { username, password } = req.body;
   const rounds = process.env.BCRYPT_ROUNDS || 8;
   const hash = bcrypt.hashSync(password, rounds);
