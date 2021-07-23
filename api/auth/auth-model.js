@@ -8,8 +8,8 @@ async function findById(id) {
 async function register(user) {
   console.log("inside register model");
   const [id] = await db("users").insert({
-    username: user.username.trim(),
-    password: user.password.trim(),
+    username: user.username,
+    password: user.password,
   });
   return findById(id);
 }
