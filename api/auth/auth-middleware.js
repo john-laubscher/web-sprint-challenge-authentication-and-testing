@@ -42,7 +42,7 @@ const validateCredentials = async (req, res, next) => {
   const { username, password } = req.body;
   console.log("validate middleware, username, pass:", username, password);
   console.log("inside validate credentials");
-  if (!username.trim() || !password.trim()) {
+  if (!username || !password) {
     next({
       status: 422,
       message: "username and password required",
