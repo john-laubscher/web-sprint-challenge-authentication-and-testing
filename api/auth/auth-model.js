@@ -16,7 +16,7 @@ async function register(user) {
 
 async function findByUsername(username) {
   console.log("inside findByUsername model");
-  const existingUsername = db("users").where("username", username).first();
+  const existingUsername = db("users").where("username", username);
   return existingUsername;
 }
 
