@@ -2,11 +2,30 @@
 // const jwt = require("jsonwebtoken");
 
 const User = require("./auth-model");
-const checkUsername = async (req, res, next) => {
+
+const checkLoginUsername = async (req, res, next) => {
+  try {
+    const user = await User.findByUsername(req.body.username);
+    console.log("inside check Login Username middleware");
+    if (!user) {
+      next({
+        status: 422,
+        message: "invalid credentials",
+      });
+    } else {
+      req.user = user;
+      next();
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const validateUsername = async (req, res, next) => {
   console.log("inside checkuser middleware");
   try {
-    const username = await User.findByUsername(req.body.username);
-    if (username) {
+    const usernameTaken = await User.findByUsername(req.body.username);
+    if (usernameTaken) {
       next({
         status: 422,
         message: "username taken",
@@ -34,6 +53,7 @@ const validateCredentials = async (req, res, next) => {
 };
 
 module.exports = {
-  checkUsername,
+  validateUsername,
   validateCredentials,
+  checkLoginUsername,
 };
